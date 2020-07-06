@@ -1,0 +1,43 @@
+
+
+------------
+
+创建数据库
+drop database if exists `trade`;
+create database `trade` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+-----------------
+CREATE TABLE `Stores` (
+  `createdAt` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) DEFAULT NULL,
+  `code` varchar(64) DEFAULT NULL,
+  `city` varchar(128) DEFAULT NULL,
+  `province` varchar(128) DEFAULT NULL,
+  `region` varchar(128) DEFAULT NULL,
+  `mall` varchar(128) DEFAULT NULL,
+  `retailerName` varchar(128) DEFAULT NULL,
+  `contact` varchar(32) DEFAULT NULL,
+  `phone` varchar(32) DEFAULT NULL,
+  `email` varchar(32) DEFAULT NULL,
+  `status` varchar(32) DEFAULT NULL,
+  `isDeleted` tinyint(1) NOT NULL DEFAULT '0',
+  `deletedAt` datetime DEFAULT NULL COMMENT 'account locked time',
+  `type` int(11) DEFAULT NULL,
+  `district` varchar(128) DEFAULT NULL,
+  `streetAddress` varchar(256) DEFAULT NULL,
+  `eStoreId` varchar(128) DEFAULT NULL,
+  `longitude` decimal(10,7) DEFAULT NULL,
+  `latitude` decimal(10,7) DEFAULT NULL,
+  `isOnline` tinyint(1) DEFAULT '0',
+  `payment_type` varchar(32) DEFAULT NULL,
+  `merchandise_count` int(8) DEFAULT NULL,
+  `type_name` varchar(32) DEFAULT NULL,
+  `image_url` varchar(256) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `name_index` (`name`),
+  KEY `retailerName_index` (`retailerName`),
+  KEY `eStoreId_index` (`eStoreId`),
+  KEY `type_index` (`type`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;

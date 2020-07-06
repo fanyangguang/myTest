@@ -1,0 +1,18 @@
+
+spring:
+  datasource:
+    trade:
+      url: jdbc:mysql://localhost:3306/trade?zeroDateTimeBehavior=convertToNull&useLegacyDatetimeCode=false&serverTimezone=Asia/Manila&autoReconnect=true&characterEncoding=utf8
+      username: root
+      password: 123
+  cloud:
+    service-registry:
+      auto-registration:
+        enabled: false
+fan:
+  bootstrap:
+    microkernel: true
+
+ph:
+  test:
+    message: 1234

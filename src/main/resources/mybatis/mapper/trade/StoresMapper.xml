@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fan.dao.trade.StoresMapper">
+  <resultMap id="BaseResultMap" type="com.fan.entity.trade.Stores">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="createdAt" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updatedAt" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="region" jdbcType="VARCHAR" property="region" />
+    <result column="mall" jdbcType="VARCHAR" property="mall" />
+    <result column="retailerName" jdbcType="VARCHAR" property="retailerName" typeHandler="com.fan.mybatis.handler.AESEncryptHandler"/>
+    <result column="contact" jdbcType="VARCHAR" property="contact" />
+    <result column="phone" jdbcType="VARCHAR" property="phone"/>
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="isDeleted" jdbcType="BIT" property="isDeleted" />
+    <result column="deletedAt" jdbcType="TIMESTAMP" property="deletedAt" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="district" jdbcType="VARCHAR" property="district" />
+    <result column="streetAddress" jdbcType="VARCHAR" property="streetAddress" />
+    <result column="eStoreId" jdbcType="VARCHAR" property="eStoreId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, createdAt, updatedAt, `name`, code, city, province, region, mall, retailerName, 
+    contact, phone, email, `status`, isDeleted, deletedAt, `type`, district, streetAddress, 
+    eStoreId
+  </sql>
+  <select id="selectByExample" parameterType="com.fan.entity.trade.StoresExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from Stores
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Stores
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from Stores
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from Stores
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fan.entity.trade.StoresExample">
+    delete from Stores
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fan.entity.trade.Stores">
+    insert into Stores (id, createdAt, updatedAt, 
+      `name`, code, city, province, 
+      region, mall, retailerName, 
+      contact, phone, email, 
+      `status`, isDeleted, deletedAt, 
+      `type`, district, streetAddress, 
+      eStoreId)
+    values (#{id,jdbcType=BIGINT}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+      #{region,jdbcType=VARCHAR}, #{mall,jdbcType=VARCHAR}, #{retailerName,jdbcType=VARCHAR}, 
+      #{contact,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{isDeleted,jdbcType=BIT}, #{deletedAt,jdbcType=TIMESTAMP}, 
+      #{type,jdbcType=INTEGER}, #{district,jdbcType=VARCHAR}, #{streetAddress,jdbcType=VARCHAR}, 
+      #{eStoreId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fan.entity.trade.Stores" useGeneratedKeys="true"
+          keyColumn="id" keyProperty="id">
+    insert into Stores
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="createdAt != null">
+        createdAt,
+      </if>
+      <if test="updatedAt != null">
+        updatedAt,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="region != null">
+        region,
+      </if>
+      <if test="mall != null">
+        mall,
+      </if>
+      <if test="retailerName != null">
+        retailerName,
+      </if>
+      <if test="contact != null">
+        contact,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="isDeleted != null">
+        isDeleted,
+      </if>
+      <if test="deletedAt != null">
+        deletedAt,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="district != null">
+        district,
+      </if>
+      <if test="streetAddress != null">
+        streetAddress,
+      </if>
+      <if test="eStoreId != null">
+        eStoreId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null">
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="mall != null">
+        #{mall,jdbcType=VARCHAR},
+      </if>
+      <if test="retailerName != null">
+        #{retailerName,jdbcType=VARCHAR,typeHandler=com.fan.mybatis.handler.AESEncryptHandler},
+      </if>
+      <if test="contact != null">
+        #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="deletedAt != null">
+        #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="district != null">
+        #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="streetAddress != null">
+        #{streetAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="eStoreId != null">
+        #{eStoreId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fan.entity.trade.StoresExample" resultType="java.lang.Long">
+    select count(*) from Stores
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update Stores
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.createdAt != null">
+        createdAt = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedAt != null">
+        updatedAt = #{record.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.name != null">
+        `name` = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.code != null">
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null">
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null">
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.region != null">
+        region = #{record.region,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mall != null">
+        mall = #{record.mall,jdbcType=VARCHAR},
+      </if>
+      <if test="record.retailerName != null">
+        retailerName = #{record.retailerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contact != null">
+        contact = #{record.contact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        `status` = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDeleted != null">
+        isDeleted = #{record.isDeleted,jdbcType=BIT},
+      </if>
+      <if test="record.deletedAt != null">
+        deletedAt = #{record.deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.type != null">
+        `type` = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.district != null">
+        district = #{record.district,jdbcType=VARCHAR},
+      </if>
+      <if test="record.streetAddress != null">
+        streetAddress = #{record.streetAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eStoreId != null">
+        eStoreId = #{record.eStoreId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update Stores
+    set id = #{record.id,jdbcType=BIGINT},
+      createdAt = #{record.createdAt,jdbcType=TIMESTAMP},
+      updatedAt = #{record.updatedAt,jdbcType=TIMESTAMP},
+      `name` = #{record.name,jdbcType=VARCHAR},
+      code = #{record.code,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
+      region = #{record.region,jdbcType=VARCHAR},
+      mall = #{record.mall,jdbcType=VARCHAR},
+      retailerName = #{record.retailerName,jdbcType=VARCHAR},
+      contact = #{record.contact,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      `status` = #{record.status,jdbcType=VARCHAR},
+      isDeleted = #{record.isDeleted,jdbcType=BIT},
+      deletedAt = #{record.deletedAt,jdbcType=TIMESTAMP},
+      `type` = #{record.type,jdbcType=INTEGER},
+      district = #{record.district,jdbcType=VARCHAR},
+      streetAddress = #{record.streetAddress,jdbcType=VARCHAR},
+      eStoreId = #{record.eStoreId,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fan.entity.trade.Stores">
+    update Stores
+    <set>
+      <if test="createdAt != null">
+        createdAt = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updatedAt = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null">
+        region = #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="mall != null">
+        mall = #{mall,jdbcType=VARCHAR},
+      </if>
+      <if test="retailerName != null">
+        retailerName = #{retailerName,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null">
+        contact = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        isDeleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="deletedAt != null">
+        deletedAt = #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="district != null">
+        district = #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="streetAddress != null">
+        streetAddress = #{streetAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="eStoreId != null">
+        eStoreId = #{eStoreId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fan.entity.trade.Stores">
+    update Stores
+    set createdAt = #{createdAt,jdbcType=TIMESTAMP},
+      updatedAt = #{updatedAt,jdbcType=TIMESTAMP},
+      `name` = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      region = #{region,jdbcType=VARCHAR},
+      mall = #{mall,jdbcType=VARCHAR},
+      retailerName = #{retailerName,jdbcType=VARCHAR},
+      contact = #{contact,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=VARCHAR},
+      isDeleted = #{isDeleted,jdbcType=BIT},
+      deletedAt = #{deletedAt,jdbcType=TIMESTAMP},
+      `type` = #{type,jdbcType=INTEGER},
+      district = #{district,jdbcType=VARCHAR},
+      streetAddress = #{streetAddress,jdbcType=VARCHAR},
+      eStoreId = #{eStoreId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

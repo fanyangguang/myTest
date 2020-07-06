@@ -1,0 +1,66 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.11.RELEASE")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply from: "libraries.gradle"
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+jar {
+	baseName = 'hystrix_product'
+	version = '1.1.0.0-RELEASE'
+}
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile(libraries.log4j)
+	compile(libraries.logback)
+	compile(libraries.commons_lang3)
+	compile(libraries.spring_boot)
+	compile(libraries.spring_boot_aop)
+	compile(libraries.alibaba_druid)
+	compile(libraries.alibaba_fastjson)
+	compile(libraries.spring_boot_druid)
+	compile(libraries.spring_boot_data_redis)
+	compile(libraries.spring_boot_freemarker)
+	compile(libraries.mysql)
+	compile(libraries.spring_boot_web)
+	compile(libraries.gson)
+	compile(libraries.sohu_idcenter)
+	compile(libraries.alibaba_fastjson)
+	compile(libraries.guava)
+
+	compile("io.shardingjdbc:sharding-jdbc-core:2.0.3")
+	compile("com.dangdang:sharding-jdbc-config-yaml:1.5.3")
+	compile("com.dangdang:sharding-jdbc-self-id-generator:1.4.2")
+	compile("commons-dbcp:commons-dbcp:1.4")
+	compile("org.reflections:reflections:0.9.9")
+	annotationProcessor 'org.projectlombok:lombok:1.18.2'
+	compileOnly 'org.projectlombok:lombok:1.18.2'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.2'
+	testCompileOnly 'org.projectlombok:lombok:1.18.2'
+	compile("com.github.pagehelper:pagehelper-spring-boot-starter:1.2.5")
+
+	testCompile("org.springframework.boot:spring-boot-starter-test:1.5.11.RELEASE")
+	testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
